@@ -6,7 +6,7 @@ const getGoals = asyncHandler(async (req, res) => {
   res.status(200).json(goals)
 })
 
-const setGoal = asyncHandler(async (req, res) => {
+const addGoal = asyncHandler(async (req, res) => {
   if (!req.body.content) {
     res.status(400)
     throw new Error('Please enter a text value')
@@ -37,4 +37,4 @@ const deleteGoal = asyncHandler(async (req, res) => {
   res.status(200).json({ id })
 })
 
-module.exports = { getGoals, setGoal, updateGoal, deleteGoal }
+module.exports = { getGoals, addGoal, updateGoal, deleteGoal }

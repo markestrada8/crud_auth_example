@@ -1,11 +1,10 @@
 const express = require('express')
-const { getGoals, setGoal, updateGoal, deleteGoal } = require('../controllers/goalController')
-const { set } = require('mongoose')
+const { getGoals, addGoal, updateGoal, deleteGoal } = require('../controllers/goalController')
 const router = express.Router()
 
 router.get('/', getGoals)
 
-router.post('/', setGoal)
+router.post('/', addGoal)
 
 router.put('/:id', updateGoal)
 
