@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon backend/server.js",
-    "server": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend"
   },
   "keywords": [],
   "author": "Mark Estrada <markestrada8@gmail.com> (https://www.npmjs.com/settings/markestrada8/profile)",
