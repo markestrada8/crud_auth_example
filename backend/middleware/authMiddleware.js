@@ -5,6 +5,7 @@ const User = require('../models/userModel')
 // AUTH FILTER LAYER FOR USER API
 const protect = asyncHandler(async (req, res, next) => {
   // console.log('Auth header: ', req.headers)
+  console.log('auth middleware')
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     try {
       const token = req.headers.authorization.split(' ')[1]
@@ -15,10 +16,10 @@ const protect = asyncHandler(async (req, res, next) => {
       }
       // DECODE DATA(ID, IAT, EXP) FROM TOKEN
       const decodedTokenData = jwt.verify(token, process.env.JWT_SECRET)
-
+      console.log(decodedTokenData)
       //QUERY MONGODB DATA INDEPENDENTLY WITH PIGGYBACK ID FROM TOKEN DATA
       req.user = await User.findById(decodedTokenData.id).select('-password')
-
+      console.log(req.user)
       // MOVE ON TO USER/GET CONTROLLER, PASS FORWARD AMENDED REQUEST OBJECT
       next()
     } catch (error) {

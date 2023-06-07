@@ -2,23 +2,28 @@ const asyncHandler = require('express-async-handler')
 const Goal = require('../models/goalModel')
 
 const getGoals = asyncHandler(async (req, res) => {
+  // console.log('req.body: ', req.body)
+  // console.log('req.user: ', req.user)
   if (!req.user) {
     res.status(404)
     throw new Error('User not found')
   }
   const { id } = req.user
   const goals = await Goal.find({ userId: id })
+  // console.log(goals)
   res.status(200).json(goals)
 })
 
 const addGoal = asyncHandler(async (req, res) => {
+  // console.log(req.body)
+  // console.log(req.user)
   if (!req.user) {
     res.status(404)
     throw new Error('User not found')
   }
   const { id } = req.user
   if (!req.body.content) {
-    res.status(400)
+    res.status(407)
     throw new Error('Please enter a text value')
   }
   const goal = await Goal.create({
@@ -52,6 +57,7 @@ const updateGoal = asyncHandler(async (req, res) => {
 })
 
 const deleteGoal = asyncHandler(async (req, res) => {
+  console.log('delete route hit')
   if (!req.user) {
     res.status(404)
     throw new Error('User not found')

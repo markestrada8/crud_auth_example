@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
-import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Spinner from '../components/Spinner'
+import { login, reset } from '../features/auth/authSlice'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +13,22 @@ const Login = () => {
   })
 
   const { email, password } = formData
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess || user) {
+      navigate('/')
+    }
+    dispatch(reset())
+
+  }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const handleChange = (event) => {
     event.preventDefault()
@@ -23,9 +43,16 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    axios.post('/api/login', formData)
+    const userData = {
+      email: email,
+      password: password
+    }
+    dispatch(login(userData))
   }
 
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
     <>
