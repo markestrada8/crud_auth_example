@@ -22,11 +22,10 @@ const addGoal = async (content, user) => {
 }
 
 const deleteGoal = async (id, user) => {
-  console.log('delete goal init')
   const config = {
     headers: { Authorization: `Bearer ${user.token}` }
   }
-  const response = await axios.delete(API_URL + `${id}`, {}, config)
+  const response = await axios.delete(API_URL + id, config)
   return response.data
 }
 

@@ -57,7 +57,6 @@ const updateGoal = asyncHandler(async (req, res) => {
 })
 
 const deleteGoal = asyncHandler(async (req, res) => {
-  console.log('delete route hit')
   if (!req.user) {
     res.status(404)
     throw new Error('User not found')
