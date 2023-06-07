@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const cors = require('cors')
 const colors = require('colors')
@@ -25,16 +26,18 @@ app.use('/api/users', userRoutes)
 
 app.use(errorHandler)
 
+// SERVE FRONT END APPLICATION
+if (process.env.NODE_ENV !== 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
 
-
-
-
-
-
-
-
-
-
+  app.get('*', (req, res) => {
+    return res.sendFile(path.resolve(__dirname, '../frontend/public/index.html'))
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.send('Set production environment')
+  })
+}
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
